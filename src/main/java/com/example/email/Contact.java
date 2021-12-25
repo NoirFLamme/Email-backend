@@ -4,9 +4,9 @@ public class Contact {
     private String name;
     private String mailAddresses; //TODO turn into a list
 
-    public Contact(String name, String mailAddress) {
+    public Contact(String name, String mailAddresses) {
         this.name = name;
-        this.mailAddresses = mailAddress;
+        this.mailAddresses = mailAddresses;
     }
 
     public String getName() {
