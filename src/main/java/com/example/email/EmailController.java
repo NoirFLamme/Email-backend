@@ -20,12 +20,14 @@ public class EmailController {
         return accountCont.findAll();
     }
     @PostMapping("/createAccount")
-    public void createAccount(@RequestBody Account account)
+    public boolean createAccount(@RequestBody Account account)
     {
         if (accountCont.validate(account))
         {
             accountCont.create(account);
+            return  true;
         }
+        return false;
 
     }
 
