@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmailService {
@@ -53,16 +55,27 @@ public class EmailService {
             accountsRepo.save(yes);
         }
     }
-//
-//    public void deleteMail(int id, String account) {
-//        for(Account i : accounts)
-//        {
-//            if(i.getEmail().equals(account))
-//            {
-//                i.getMails().removeIf(j -> j.getId() == id);
-//            }
-//        }
-//    }
+
+    public void deleteMail(String id, String account) {
+        Account temp = accountsRepo.findByEmail(account);
+        for (Mail i: temp.getMails()) {
+            if (i.getId().equals(id))
+            {
+                temp.getMails().remove(i);
+                accountsRepo.save(temp);
+                return;
+            }
+        }
 
 
+    }
+
+
+    public void sort(String id, String account, String method) {
+        Account temp = accountsRepo.findByEmail(account);
+       Sorter sorter = new Sorter(temp.getMails());
+       sorter.sortby(method);
+       accountsRepo.save(temp);
+
+    }
 }

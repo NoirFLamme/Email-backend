@@ -37,11 +37,17 @@ public class EmailController {
         accountCont.add(mail);
     }
 
-//    @DeleteMapping("/deleteMail")
-//    public void deleteMail(@RequestParam int id, @RequestParam String account){
-//        accountCont.deleteMail(id, account);
-//    }
-////
+    @DeleteMapping("/deleteMail")
+    public void deleteMail(@RequestParam String id, @RequestParam String account){
+        accountCont.deleteMail(id, account);
+    }
+
+    @GetMapping("/sort")
+    public void sort(@RequestParam String id, @RequestParam String account, @RequestParam String method)
+    {
+        accountCont.sort(id, account, method);
+    }
+
 ////    @PostMapping("/addContact")
 ////    public Account addContact(@RequestBody Account user){
 //

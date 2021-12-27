@@ -1,9 +1,13 @@
 package com.example.email;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 
-public class Mail {
-    private final int id;
+public class Mail implements Comparable<Mail>{
+    @Id
+    private final String id;
+
     private final Contact sender;
     private final Contact[] receivers;
     private final Date date;
@@ -11,8 +15,10 @@ public class Mail {
     private final String body;
     private final Attachment attachment;
     private String type;
+    private int opened;
+    private int  starred;
 
-    public Mail(Contact sender, Contact[] receivers, String subject, String body, Attachment attachment, int id, String type) {
+    public Mail(Contact sender,Date date, Contact[] receivers, String subject, String body, Attachment attachment, String id, String type) {
         this.sender = sender;
         this.receivers = receivers;
         this.date = this.getDate();
@@ -21,9 +27,11 @@ public class Mail {
         this.attachment = attachment;
         this.id = id;
         this.type = type;
+        this.opened = 0;
+        this.starred = 0;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -59,6 +67,27 @@ public class Mail {
         this.type = type;
         return this;
     }
+
+    public int isOpened() {
+        return opened;
+    }
+
+    public void setOpened(int opened) {
+        this.opened = opened;
+    }
+
+    public int isStarred() {
+        return  this.starred;
+    }
+
+    public void setStarred(int starred) {
+        this.starred = starred;
+    }
+
+    public int compareTo(Mail mail) {
+        return this.date.compareTo(mail.date);
+    }
+
 
 
 }

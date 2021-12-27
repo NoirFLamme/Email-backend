@@ -13,27 +13,27 @@ public class Account implements Serializable {
     private String id;
 
 
-    private String username;
+    private String name;
     private String password;
     private String email;
     private List<Mail> mails;
     private Contact[] contacts;
 
-    public Account(String id, String username, String password, String email, List<Mail> mails, Contact[] contacts) {
+    public Account(String id, String name, String password, String email, List<Mail> mails, Contact[] contacts) {
         this.id = id;
-        this.username = username;
+        this.name = name;
         this.password = password;
         this.email = email;
         this.mails = mails;
         this.contacts = contacts;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
