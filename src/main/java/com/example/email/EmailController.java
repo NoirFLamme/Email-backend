@@ -48,6 +48,19 @@ public class EmailController {
         accountCont.sort(id, account, method);
     }
 
+    @GetMapping("/search")
+    public List<Mail> search(@RequestParam String account, @RequestParam String searchInput)
+    {
+        return accountCont.search(account, searchInput);
+    }
+
+
+    @PostMapping("/filter")
+    public List<Mail> filter(@RequestParam String account, @RequestBody Mail criterias)
+    {
+        return accountCont.filter(account, criterias);
+    }
+
 ////    @PostMapping("/addContact")
 ////    public Account addContact(@RequestBody Account user){
 //

@@ -1,16 +1,12 @@
 package com.example.email;
 
 
+import com.example.email.filter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmailService {
@@ -77,5 +73,16 @@ public class EmailService {
        sorter.sortby(method);
        accountsRepo.save(temp);
 
+    }
+
+    public List<Mail> search(String account, String searchInput) {
+        CriteriaMailHeader headerSearch = new CriteriaMailHeader();
+        return headerSearch.meetCriteria(accountsRepo.findByEmail(account).getMails(), searchInput);
+    }
+
+    public List<Mail> filter(String account, Mail criterias) {
+        Criteria filter = new AndCriteria(new CriteriaDate(), new CriteriaReceiver(), new CriteriaSender(), new CriteriaType());
+        Account temp = accountsRepo.findByEmail(account);
+        return filter.meetCriteria(temp.getMails(), criterias);
     }
 }
