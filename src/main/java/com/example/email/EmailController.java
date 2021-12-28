@@ -19,6 +19,7 @@ public class EmailController {
     public  List<Account> getAllTodos(){
         return accountCont.findAll();
     }
+
     @PostMapping("/createAccount")
     public boolean createAccount(@RequestBody Account account)
     {
@@ -30,6 +31,21 @@ public class EmailController {
         return false;
 
     }
+
+    @PostMapping("/validate")
+    public boolean validate(@RequestBody Account account)
+    {
+        return accountCont.validateLogin(account);
+    }
+
+
+    @GetMapping("/view")
+    public Account view(@RequestBody Account account)
+    {
+        return accountCont.findAccount(account.getEmail());
+    }
+
+
 
 
     @PostMapping("/createMail")

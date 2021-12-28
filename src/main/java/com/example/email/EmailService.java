@@ -32,6 +32,8 @@ public class EmailService {
         return false;
     }
 
+
+
     public void add(Mail mail) {
         Mail temp = mail;
         temp.setType("Sent");
@@ -128,6 +130,21 @@ public class EmailService {
             }
             ye.addContact(i);
         }
+    }
+
+    public boolean validateLogin(Account account) {
+        if (this.validate(account))
+        {
+            if (accountsRepo.findByEmail(account.getEmail()).getPassword().equals(account.getPassword()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Account findAccount(String email) {
+        return accountsRepo.findByEmail(email);
     }
 
 
