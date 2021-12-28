@@ -42,10 +42,9 @@ public class EmailService {
         Account yes = accountsRepo.findByEmail(sender.getMailAddresses());
 
         yes.addMails(mail);
-
-        Contacts recievers = mail.getReceivers();
+        List<Contact> recievers = mail.getReceivers();
         accountsRepo.save(yes);
-        for (Contact i : recievers.getContacts()) {
+        for (Contact i : recievers) {
             yes = accountsRepo.findByEmail(i.getMailAddresses());
             temp.setType("Inbox");
 
@@ -105,32 +104,32 @@ public class EmailService {
         accountsRepo.save(temp);
     }
 
-    public void addContact(String user, Contact contact) {
-        Account temp = accountsRepo.findByEmail(user);
-        temp.getContacts().getContacts().add(contact);
-        accountsRepo.save(temp);
-
-    }
-
-    public void deleteContact(String user, Contact contact) {
-        Account temp = accountsRepo.findByEmail(user);
-        temp.getContacts().getContacts().remove(contact);
-        accountsRepo.save(temp);
-    }
-
-    public void editContact(String user, Contact contact) {
-        Account temp = accountsRepo.findByEmail(user);
-        Contacts ye = new Contacts();
-        for (Contact i : temp.getContacts().getContacts())
-        {
-            if (i.getName().equals(contact.getName()))
-            {
-                ye.addContact(contact);
-                continue;
-            }
-            ye.addContact(i);
-        }
-    }
+//    public void addContact(String user, Contact contact) {
+//        Account temp = accountsRepo.findByEmail(user);
+//        temp.getContacts().getContacts().add(contact);
+//        accountsRepo.save(temp);
+//
+//    }
+//
+//    public void deleteContact(String user, Contact contact) {
+//        Account temp = accountsRepo.findByEmail(user);
+//        temp.getContacts().getContacts().remove(contact);
+//        accountsRepo.save(temp);
+//    }
+//
+//    public void editContact(String user, Contact contact) {
+//        Account temp = accountsRepo.findByEmail(user);
+//        Contacts ye = new ArrayList<>();
+//        for (Contact i : temp.getContacts().getContacts())
+//        {
+//            if (i.getName().equals(contact.getName()))
+//            {
+//                ye.addContact(contact);
+//                continue;
+//            }
+//            ye.addContact(i);
+//        }
+//    }
 
     public boolean validateLogin(Account account) {
         if (this.validate(account))

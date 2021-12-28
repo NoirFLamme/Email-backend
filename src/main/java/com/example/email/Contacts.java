@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contacts {
-    private final List<Contact> contacts;
+    private final ArrayList<Contact> contacts;
 
     public Contacts() {
         this.contacts = new ArrayList<Contact>();
     }
+
 
     public List<Contact> getContacts() {
         return contacts;

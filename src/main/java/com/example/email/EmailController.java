@@ -89,21 +89,21 @@ public class EmailController {
 //        accountCont.setMode(mode, account);
 //    }
 
-    @PostMapping("/addContact")
-    public void addContact(@RequestParam String user, @RequestBody Contact contact){
-        accountCont.addContact(user, contact);
-    }
-
-    @PostMapping("/deleteContact")
-    public void deleteContact(@RequestParam String user, @RequestBody Contact contact){
-        accountCont.deleteContact(user, contact);
-    }
-
-    @PostMapping("/editContact")
-    public void editContact(@RequestParam String user, @RequestBody Contact contact){
-        accountCont.editContact(user, contact);
-    }
-
+//    @PostMapping("/addContact")
+//    public void addContact(@RequestParam String user, @RequestBody Contact contact){
+//        accountCont.addContact(user, contact);
+//    }
+//
+//    @PostMapping("/deleteContact")
+//    public void deleteContact(@RequestParam String user, @RequestBody Contact contact){
+//        accountCont.deleteContact(user, contact);
+//    }
+//
+//    @PostMapping("/editContact")
+//    public void editContact(@RequestParam String user, @RequestBody Contact contact){
+//        accountCont.editContact(user, contact);
+//    }
+//
 
 
     

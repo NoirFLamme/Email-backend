@@ -15,9 +15,9 @@ public class CriteriaReceiver implements Criteria{
         for (Mail mail:
                 mails) {
             for (Contact contact:
-                 mail.getReceivers().getContacts()) {
-                if (contact.getName().equals(criteria.getReceivers().getContacts().get(0).getName()) ||
-                        contact.getMailAddresses().equals(criteria.getReceivers().getContacts().get(0).getMailAddresses()))
+                 mail.getReceivers()) {
+                if (contact.getName().equals(criteria.getReceivers().get(0).getName()) ||
+                        contact.getMailAddresses().equals(criteria.getReceivers().get(0).getMailAddresses()))
                 {
                     matchedMails.add(mail);
                     break;
