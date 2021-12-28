@@ -42,6 +42,12 @@ public class EmailController {
         accountCont.deleteMail(id, account);
     }
 
+
+    @PostMapping("/editMail")
+    public void editMail(@RequestParam String id, @RequestBody Mail mail){
+        accountCont.editMail(id, mail);
+    }
+
     @GetMapping("/sort")
     public void sort(@RequestParam String id, @RequestParam String account, @RequestParam String method)
     {
@@ -61,10 +67,28 @@ public class EmailController {
         return accountCont.filter(account, criterias);
     }
 
-////    @PostMapping("/addContact")
-////    public Account addContact(@RequestBody Account user){
-//
+//    @GetMapping("/inboxmode")
+//    public void mode(@RequestParam String account, @RequestParam String mode)
+//    {
+//        accountCont.setMode(mode, account);
 //    }
+
+    @PostMapping("/addContact")
+    public void addContact(@RequestParam String user, @RequestBody Contact contact){
+        accountCont.addContact(user, contact);
+    }
+
+    @PostMapping("/deleteContact")
+    public void deleteContact(@RequestParam String user, @RequestBody Contact contact){
+        accountCont.deleteContact(user, contact);
+    }
+
+    @PostMapping("/editContact")
+    public void editContact(@RequestParam String user, @RequestBody Contact contact){
+        accountCont.editContact(user, contact);
+    }
+
+
 
     
 }

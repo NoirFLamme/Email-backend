@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmailService {
@@ -41,9 +41,9 @@ public class EmailService {
 
         yes.addMails(mail);
 
-        Contact[] recievers = mail.getReceivers();
+        Contacts recievers = mail.getReceivers();
         accountsRepo.save(yes);
-        for (Contact i : recievers) {
+        for (Contact i : recievers.getContacts()) {
             yes = accountsRepo.findByEmail(i.getMailAddresses());
             temp.setType("Inbox");
 
@@ -85,4 +85,61 @@ public class EmailService {
         Account temp = accountsRepo.findByEmail(account);
         return filter.meetCriteria(temp.getMails(), criterias);
     }
+
+    public void editMail(String account, Mail mail) {
+        Account temp = accountsRepo.findByEmail(account);
+        List<Mail> ye = new ArrayList<>();
+        for (Mail i : temp.getMails())
+        {
+            if (i.getId().equals(mail.getId()))
+            {
+                i = mail;
+                ye.add(mail);
+                continue;
+            }
+            ye.add(i);
+        }
+        temp.setMails(ye);
+        accountsRepo.save(temp);
+    }
+
+    public void addContact(String user, Contact contact) {
+        Account temp = accountsRepo.findByEmail(user);
+        temp.getContacts().getContacts().add(contact);
+        accountsRepo.save(temp);
+
+    }
+
+    public void deleteContact(String user, Contact contact) {
+        Account temp = accountsRepo.findByEmail(user);
+        temp.getContacts().getContacts().remove(contact);
+        accountsRepo.save(temp);
+    }
+
+    public void editContact(String user, Contact contact) {
+        Account temp = accountsRepo.findByEmail(user);
+        Contacts ye = new Contacts();
+        for (Contact i : temp.getContacts().getContacts())
+        {
+            if (i.getName().equals(contact.getName()))
+            {
+                ye.addContact(contact);
+                continue;
+            }
+            ye.addContact(i);
+        }
+    }
+
+
+//    public void setMode(String mode, String account) {
+//        Account temp = accountsRepo.findByEmail(account);
+//        PriorityQueue<Mail> pq = new PriorityQueue<Mail>(new PriorityComparator());
+//        pq.addAll(temp.getMails());
+//        System.out.println(pq.peek().getPriority());
+//        Collections.sort();
+//        List<Mail> yeye = new ArrayList<>(pq);
+//        System.out.println(yeye.get(0).getPriority());
+//        temp.setMails(yeye);
+//        accountsRepo.save(temp);
+//    }
 }

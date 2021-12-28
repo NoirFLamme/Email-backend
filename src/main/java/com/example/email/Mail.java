@@ -9,7 +9,7 @@ public class Mail implements Comparable<Mail>{
     private final String id;
 
     private final Contact sender;
-    private final Contact[] receivers;
+    private final Contacts receivers;
     private final Date date;
     private final String subject;
     private final String body;
@@ -17,8 +17,9 @@ public class Mail implements Comparable<Mail>{
     private String type;
     private int opened;
     private int  starred;
+    private final int priority;
 
-    public Mail(Contact sender,Date date, Contact[] receivers, String subject, String body, Attachment attachment, String id, String type) {
+    public Mail(Contact sender,Date date, Contacts receivers, String subject, String body, Attachment attachment, String id, String type, int priority) {
         this.sender = sender;
         this.receivers = receivers;
         this.date = this.getDate();
@@ -29,6 +30,7 @@ public class Mail implements Comparable<Mail>{
         this.type = type;
         this.opened = 0;
         this.starred = 0;
+        this.priority = priority;
     }
 
     public String getId() {
@@ -39,7 +41,7 @@ public class Mail implements Comparable<Mail>{
         return sender;
     }
 
-    public Contact[] getReceivers() {
+    public Contacts getReceivers() {
         return receivers;
     }
 
@@ -88,6 +90,7 @@ public class Mail implements Comparable<Mail>{
         return this.date.compareTo(mail.date);
     }
 
-
-
+    public int getPriority() {
+        return priority;
+    }
 }

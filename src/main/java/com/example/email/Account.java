@@ -17,9 +17,9 @@ public class Account implements Serializable {
     private String password;
     private String email;
     private List<Mail> mails;
-    private Contact[] contacts;
+    private Contacts contacts;
 
-    public Account(String id, String name, String password, String email, List<Mail> mails, Contact[] contacts) {
+    public Account(String id, String name, String password, String email, List<Mail> mails, Contacts contacts) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -69,11 +69,11 @@ public class Account implements Serializable {
     }
 
 
-    public Contact[] getContacts() {
+    public Contacts getContacts() {
         return contacts;
     }
 
-    public void setContacts(Contact[] contacts) {
+    public void setContacts(Contacts contacts) {
         this.contacts = contacts;
     }
 
