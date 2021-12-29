@@ -13,7 +13,10 @@ import java.util.*;
 public class EmailService {
 
     @Autowired
-    private AccountsRepo accountsRepo;
+    public static  EmailService accountCont;
+
+    @Autowired
+    private  AccountsRepo accountsRepo;
 
     public static int count = 0;
 
@@ -182,17 +185,23 @@ public class EmailService {
         accountsRepo.save(temp);
     }
 
-    public void uploadAttachments(String name, String URL, int id, String email)
-    {
-        Attachment attachment = new Attachment(name,URL);
-        Account temp = accountsRepo.findByEmail(email);
-        for (Mail i : temp.getMails())
-        {
-            if (i.getId() == id)
-            {
-                i.getAttachment().add(attachment);
-                return;
-            }
-        }
-    }
+
+//    public void uploadAttachments(String name, String URL, int id, String email)
+//    {
+//        Attachment attachment = new Attachment(name,URL);
+//        Account temp = accountsRepo.findByEmail(email);
+//        List<Mail> ye = new ArrayList<>();
+//        for (Mail i : temp.getMails())
+//        {
+//            if (i.getId() == id)
+//            {
+//
+//                i.getAttachment().add(attachment);
+//                ye.add(i);
+//                temp.setMails(ye);
+//                accountsRepo.save(temp);
+//                return;
+//            }
+//        }
+//    }
 }

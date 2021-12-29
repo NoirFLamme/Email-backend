@@ -12,16 +12,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import com.example.email.objects.Attachment;
 
-@Controller
+@RestController
 public class FilesController {
 
     EmailService emailService;
@@ -49,22 +46,21 @@ public class FilesController {
     }
 
     @GetMapping("/files")
-    public ResponseEntity<List<Attachment>> getListFiles() {
+    public ResponseEntity<List<Attachment>> getListFiles(int id) {
         List<Attachment> fileInfos = storageService.loadAll().map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
 
-            return new Attachment(filename, url);
+            return new Attachment(filename, url, id);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
-    @GetMapping("/files/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = storageService.load(filename);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    @GetMapping("/get")
+    public List<Attachment> getFile(@RequestParam int id) {
+        List<Attachment> file = storageService.load(id);
+        return file;
     }
 }

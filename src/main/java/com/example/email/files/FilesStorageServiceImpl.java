@@ -1,25 +1,37 @@
 package com.example.email.files;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
+import com.example.email.AccountsRepo;
 import com.example.email.EmailService;
+import com.example.email.objects.Account;
+import com.example.email.objects.Attachment;
+import com.example.email.objects.Mail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.example.email.EmailService.accountCont;
+
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
 
     private final Path root = Paths.get("uploads");
-    EmailService emailService;
+
+    @Autowired
+    private AttachmentRepo attachments;
 
     @Override
     public void init() {
@@ -34,26 +46,20 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     public void save(MultipartFile file, int id, String email) {
         try {
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-            emailService.uploadAttachments(file.getOriginalFilename(), String.valueOf(this.root.resolve(file.getOriginalFilename())), id, email);
+
+            Attachment attachment = new Attachment(file.getOriginalFilename(),String.valueOf(this.root.resolve(file.getOriginalFilename())), id);
+            attachments.insert(attachment);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
     }
 
     @Override
-    public Resource load(String filename) {
-        try {
-            Path file = root.resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
+    public List<Attachment> load(int id) {
 
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("Could not read the file!");
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
-        }
+        List<Attachment> attachmentList = attachments.findAllByValue(id);
+
+        return attachmentList;
     }
 
     @Override

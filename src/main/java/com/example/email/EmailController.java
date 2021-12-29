@@ -3,7 +3,6 @@ package com.example.email;
 import com.example.email.objects.Account;
 import com.example.email.objects.Contact;
 import com.example.email.objects.Mail;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +15,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static com.example.email.EmailService.accountCont;
+
 @RestController
 public class EmailController {
-    @Autowired
-    private EmailService accountCont;
 
 
 
     @GetMapping("/")
-    public  List<Account> getAllTodos(){
+    public  List<Account> returnAll(){
         return accountCont.findAll();
     }
 
@@ -53,28 +52,6 @@ public class EmailController {
         return accountCont.findAccount(account);
     }
 
-
-
-
-    @PostMapping("/file/upload")
-    @ResponseBody
-
-    public String uploadFile(@RequestBody MultipartFile file, @RequestBody String Info) {
-        Path root = Paths.get("uploads/" + Info);
-        System.out.println("Json is" + Info);
-        if (file.isEmpty()) {
-            return "No file attached";
-        }
-        try {
-            // Get the file and save it somewhere
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(root + file.getOriginalFilename());
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "Succuss";
-    }
 
 
 
@@ -137,6 +114,9 @@ public class EmailController {
     @PostMapping
     public void sendAttachment(final @RequestParam CommonsMultipartFile attachment)
     {}
+
+
+
 
 
     
