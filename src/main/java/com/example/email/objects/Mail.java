@@ -14,12 +14,14 @@ public class Mail implements Comparable<Mail>{
     private final Date date;
     private final String subject;
     private final String body;
+    private List<Attachment> attachment;
     private String type;
     private int opened;
     private int  starred;
     private final Integer priority;
 
-    public Mail(Contact sender,Date date, List<Contact> receivers, String subject, String body, String id, String type, Integer priority) {
+    public Mail(Contact sender,Date date, List<Contact> receivers, String subject,
+                String body, String id, String type, Integer priority, List<Attachment>  attachment) {
         this.sender = sender;
         this.receivers = receivers;
         this.date = this.getDate();
@@ -30,6 +32,7 @@ public class Mail implements Comparable<Mail>{
         this.opened = 0;
         this.starred = 0;
         this.priority = priority;
+        this.attachment = attachment;
     }
 
     public String getId() {
@@ -88,5 +91,13 @@ public class Mail implements Comparable<Mail>{
 
     public Integer getPriority() {
         return priority;
+    }
+
+    public List<Attachment>  getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(List<Attachment>  attachment) {
+        this.attachment = attachment;
     }
 }

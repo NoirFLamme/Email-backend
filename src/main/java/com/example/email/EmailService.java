@@ -20,7 +20,10 @@ public class EmailService {
         return accountsRepo.findAll();
     }
 
-    public Account create(Account account){ return accountsRepo.insert(account); }
+    public Account create(Account account){
+        accountsRepo.insert(account);
+        return account;
+    }
 
     public boolean validate(Account account) {
         Account match = accountsRepo.findByEmail(account.getEmail());
@@ -29,12 +32,15 @@ public class EmailService {
         {
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
+
     }
 
 
 
-    public void add(Mail mail) {
+    public Account add(Mail mail) {
         Mail temp = mail;
         temp.setType("Sent");
 
@@ -51,6 +57,7 @@ public class EmailService {
             yes.addMails(temp);
             accountsRepo.save(yes);
         }
+        return yes;
     }
 
     public void deleteMail(String id, String account) {
@@ -134,9 +141,10 @@ public class EmailService {
     }
 
     public boolean validateLogin(Account account) {
-        if (this.validate(account))
+        if (!this.validate(account))
         {
-            if (accountsRepo.findByEmail(account.getEmail()).getPassword().equals(account.getPassword()))
+            if (accountsRepo.findByEmail(account.getEmail()).getPassword().equals(account.getPassword()) &&
+                accountsRepo.findByEmail(account.getEmail()).getEmail().equals(account.getEmail()))
             {
                 return true;
             }
@@ -167,5 +175,18 @@ public class EmailService {
         }
 
         accountsRepo.save(temp);
+    }
+
+    public void uploadAttachments(Attachment attachment, String email)
+    {
+        Account temp = accountsRepo.findByEmail(email);
+        for (Mail i : temp.getMails())
+        {
+            if (i.getId().equals(attachment.getId()))
+            {
+                i.getAttachment().add(attachment);
+                return;
+            }
+        }
     }
 }

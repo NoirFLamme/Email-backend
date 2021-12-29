@@ -55,11 +55,12 @@ public class EmailController {
 
 
 
-    private final Path root = Paths.get("uploads");
+
     @PostMapping("/file/upload")
     @ResponseBody
 
     public String uploadFile(@RequestBody MultipartFile file, @RequestBody String Info) {
+        Path root = Paths.get("uploads/" + Info);
         System.out.println("Json is" + Info);
         if (file.isEmpty()) {
             return "No file attached";
