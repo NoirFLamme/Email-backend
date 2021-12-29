@@ -1,4 +1,4 @@
-package com.example.email;
+package com.example.email.objects;
 
 import org.springframework.data.annotation.Id;
 
@@ -14,24 +14,22 @@ public class Mail implements Comparable<Mail>{
     private final Date date;
     private final String subject;
     private final String body;
-    private final Attachment attachment;
     private String type;
     private int opened;
     private int  starred;
-//    private int priority;
+    private final Integer priority;
 
-    public Mail(Contact sender,Date date, List<Contact> receivers, String subject, String body, Attachment attachment, String id, String type) {
+    public Mail(Contact sender,Date date, List<Contact> receivers, String subject, String body, String id, String type, Integer priority) {
         this.sender = sender;
         this.receivers = receivers;
         this.date = this.getDate();
         this.subject = subject;
         this.body = body;
-        this.attachment = attachment;
         this.id = id;
         this.type = type;
         this.opened = 0;
         this.starred = 0;
-//        this.priority = priority;
+        this.priority = priority;
     }
 
     public String getId() {
@@ -58,9 +56,6 @@ public class Mail implements Comparable<Mail>{
         return body;
     }
 
-    public Attachment getAttachment() {
-        return attachment;
-    }
 
     public String getType() {
         return type;
@@ -91,7 +86,7 @@ public class Mail implements Comparable<Mail>{
         return this.date.compareTo(mail.date);
     }
 
-//    public int getPriority() {
-//        return priority;
-//    }
+    public Integer getPriority() {
+        return priority;
+    }
 }

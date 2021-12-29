@@ -1,4 +1,4 @@
-package com.example.email;
+package com.example.email.objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

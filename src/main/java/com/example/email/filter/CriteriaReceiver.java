@@ -1,7 +1,7 @@
 package com.example.email.filter;
 
-import com.example.email.Contact;
-import com.example.email.Mail;
+import com.example.email.objects.Contact;
+import com.example.email.objects.Mail;
 
 import java.util.ArrayList;
 import java.util.List;

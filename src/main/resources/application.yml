@@ -8,3 +8,7 @@ spring:
       database: springMail
       host: localhost
       port: 27017
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 8MB

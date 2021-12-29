@@ -1,9 +1,8 @@
 package com.example.email.filter;
 
-import com.example.email.Mail;
+import com.example.email.objects.Mail;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CriteriaDate implements Criteria

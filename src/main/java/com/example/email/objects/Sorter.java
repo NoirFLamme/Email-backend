@@ -1,12 +1,10 @@
-package com.example.email;
+package com.example.email.objects;
 
-import com.example.email.sort.Sort;
 import com.example.email.sort.SortByDate;
 import com.example.email.sort.SortByImportance;
 import com.example.email.sort.SortByOpened;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Sorter {

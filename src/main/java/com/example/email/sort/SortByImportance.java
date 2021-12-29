@@ -1,6 +1,6 @@
 package com.example.email.sort;
 
-import com.example.email.Mail;
+import com.example.email.objects.Mail;
 
 import java.util.Comparator;
 

@@ -1,4 +1,4 @@
-package com.example.email;
+package com.example.email.objects;
 
 public class Contact {
     private String name;

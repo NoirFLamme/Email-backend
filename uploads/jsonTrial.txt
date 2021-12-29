@@ -1,0 +1,43 @@
+{
+    "id": "0",
+    "sender":
+    {
+        "name" : "ramy",
+        "mailAddresses" : "ramy@email.com"
+    },
+    "receivers":
+    [
+        {
+            "name" : "es",
+            "mailAddresses" : "es@email.com"
+        },
+        {
+            "name" : "moh",
+            "mailAddresses" : "moh@email.com"
+        }
+    ]
+}
+
+
+
+ {
+        "username": "ramy",
+        "password": "1234",
+        "email": "ramy@email.com",
+        "mails": null,
+        "contacts": null
+    },
+    {
+        "username": "moh",
+        "password": "1234",
+        "email": "moh@email.com",
+        "mails": null,
+        "contacts": null
+    },
+    {
+        "username": "es",
+        "password": "1234",
+        "email": "es@email.com",
+        "mails": null,
+        "contacts": null
+    }

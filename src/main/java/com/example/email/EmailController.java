@@ -1,9 +1,19 @@
 package com.example.email;
 
+import com.example.email.objects.Account;
+import com.example.email.objects.Contact;
+import com.example.email.objects.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -11,8 +21,6 @@ public class EmailController {
     @Autowired
     private EmailService accountCont;
 
-    @Autowired
-    private Mailer mailer;
 
 
     @GetMapping("/")
@@ -20,7 +28,7 @@ public class EmailController {
         return accountCont.findAll();
     }
 
-    @PostMapping("/createAccount")
+    @PostMapping("/accounts/create")
     public boolean createAccount(@RequestBody Account account)
     {
         if (accountCont.validate(account))
@@ -32,14 +40,14 @@ public class EmailController {
 
     }
 
-    @PostMapping("/validate")
+    @PostMapping("/accounts/validate")
     public boolean validate(@RequestBody Account account)
     {
         return accountCont.validateLogin(account);
     }
 
 
-    @GetMapping("/view")
+    @GetMapping ("/view")
     public Account view(@RequestBody Account account)
     {
         return accountCont.findAccount(account.getEmail());
@@ -47,19 +55,40 @@ public class EmailController {
 
 
 
+    private final Path root = Paths.get("uploads");
+    @PostMapping("/file/upload")
+    @ResponseBody
 
-    @PostMapping("/createMail")
+    public String uploadFile(@RequestBody MultipartFile file, @RequestBody String Info) {
+        System.out.println("Json is" + Info);
+        if (file.isEmpty()) {
+            return "No file attached";
+        }
+        try {
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(root + file.getOriginalFilename());
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Succuss";
+    }
+
+
+
+    @PostMapping("/mail/create")
     public void createMail(@RequestBody Mail mail){
         accountCont.add(mail);
     }
 
-    @DeleteMapping("/deleteMail")
+    @DeleteMapping("/mail/delete")
     public void deleteMail(@RequestParam String id, @RequestParam String account){
         accountCont.deleteMail(id, account);
     }
 
 
-    @PostMapping("/editMail")
+    @PostMapping("/mail/edit")
     public void editMail(@RequestParam String id, @RequestBody Mail mail){
         accountCont.editMail(id, mail);
     }
@@ -83,27 +112,30 @@ public class EmailController {
         return accountCont.filter(account, criterias);
     }
 
-//    @GetMapping("/inboxmode")
-//    public void mode(@RequestParam String account, @RequestParam String mode)
-//    {
-//        accountCont.setMode(mode, account);
-//    }
+    @GetMapping("/inboxmode")
+    public void mode(@RequestParam String account, @RequestParam String mode)
+    {
+        accountCont.setMode(mode, account);
+    }
 
-//    @PostMapping("/addContact")
-//    public void addContact(@RequestParam String user, @RequestBody Contact contact){
-//        accountCont.addContact(user, contact);
-//    }
-//
-//    @PostMapping("/deleteContact")
-//    public void deleteContact(@RequestParam String user, @RequestBody Contact contact){
-//        accountCont.deleteContact(user, contact);
-//    }
-//
-//    @PostMapping("/editContact")
-//    public void editContact(@RequestParam String user, @RequestBody Contact contact){
-//        accountCont.editContact(user, contact);
-//    }
-//
+    @PostMapping("/addContact")
+    public void addContact(@RequestParam String user, @RequestBody Contact contact){
+        accountCont.addContact(user, contact);
+    }
+
+    @PostMapping("/deleteContact")
+    public void deleteContact(@RequestParam String user, @RequestBody Contact contact){
+        accountCont.deleteContact(user, contact);
+    }
+
+    @PostMapping("/editContact")
+    public void editContact(@RequestParam String user, @RequestBody Contact contact){
+        accountCont.editContact(user, contact);
+    }
+
+    @PostMapping
+    public void sendAttachment(final @RequestParam CommonsMultipartFile attachment)
+    {}
 
 
     

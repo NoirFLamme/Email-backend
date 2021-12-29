@@ -1,6 +1,6 @@
 package com.example.email;
+import com.example.email.objects.Account;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 class EmailApplicationTests {
 
 	@MockBean
-	private AccountsRepo accountsRepo;
+	private AccountsRepo accountRepo;
 
 	@Autowired
 	private EmailService emailService;
@@ -41,7 +41,7 @@ class EmailApplicationTests {
 	 	Account account2 = new Account("2", "zyad", "321", "zyad@mail.com", null, null);
 		List<Account> data = Arrays.asList(account1, account2);
 
-		given(accountsRepo.findAll()).willReturn(data);
+		given(this.accountRepo.findAll()).willReturn(data);
 
 		assertThat(emailService.findAll()).hasSize(2).contains(account1, account2);
 
