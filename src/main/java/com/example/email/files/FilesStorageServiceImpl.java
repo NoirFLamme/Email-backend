@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import com.example.email.EmailService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FilesStorageServiceImpl implements FilesStorageService {
 
     private final Path root = Paths.get("uploads");
+    EmailService emailService;
 
     @Override
     public void init() {
@@ -29,9 +31,10 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file, int id, String email) {
         try {
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            emailService.uploadAttachments(file.getOriginalFilename(), String.valueOf(this.root.resolve(file.getOriginalFilename())), id, email);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }

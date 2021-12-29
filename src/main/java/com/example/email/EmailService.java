@@ -182,16 +182,17 @@ public class EmailService {
         accountsRepo.save(temp);
     }
 
-//    public void uploadAttachments(Attachment attachment, String email)
-//    {
-//        Account temp = accountsRepo.findByEmail(email);
-//        for (Mail i : temp.getMails())
-//        {
-//            if (i.getId().equals(attachment.getId()))
-//            {
-//                i.getAttachment().add(attachment);
-//                return;
-//            }
-//        }
-//    }
+    public void uploadAttachments(String name, String URL, int id, String email)
+    {
+        Attachment attachment = new Attachment(name,URL);
+        Account temp = accountsRepo.findByEmail(email);
+        for (Mail i : temp.getMails())
+        {
+            if (i.getId() == id)
+            {
+                i.getAttachment().add(attachment);
+                return;
+            }
+        }
+    }
 }

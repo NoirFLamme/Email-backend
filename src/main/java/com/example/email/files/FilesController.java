@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -23,17 +24,19 @@ import com.example.email.objects.Attachment;
 @Controller
 public class FilesController {
 
+    EmailService emailService;
+
     @Autowired
     FilesStorageService storageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFiles(@RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<ResponseMessage> uploadFiles(@RequestParam("files") MultipartFile[] files, @RequestParam int id, @RequestParam String email) {
         String message = "";
         try {
             List<String> fileNames = new ArrayList<>();
 
             Arrays.asList(files).stream().forEach(file -> {
-                storageService.save(file);
+                storageService.save(file, id, email);
                 fileNames.add(file.getOriginalFilename());
             });
 

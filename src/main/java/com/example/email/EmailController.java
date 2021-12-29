@@ -48,9 +48,9 @@ public class EmailController {
 
 
     @GetMapping ("/view")
-    public Account view(@RequestBody Account account)
+    public Account view(@RequestParam String account)
     {
-        return accountCont.findAccount(account.getEmail());
+        return accountCont.findAccount(account);
     }
 
 
