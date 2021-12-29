@@ -1,4 +1,4 @@
-package files;
+package com.example.email.files;
 
 public class ResponseMessage {
     private String message;

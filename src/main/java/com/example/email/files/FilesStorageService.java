@@ -1,4 +1,4 @@
-package files;
+package com.example.email.files;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;

@@ -1,4 +1,4 @@
-package files;
+package com.example.email.files;
 
 
 import java.io.IOException;
