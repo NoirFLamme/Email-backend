@@ -22,14 +22,14 @@ public class EmailService {
 
     public Account create(Account account){ return accountsRepo.insert(account); }
 
-    public boolean validate(Account account) {
+    public boolean checkIfEmailExists(Account account) {
         Account match = accountsRepo.findByEmail(account.getEmail());
         System.out.println(match);
         if (match == null)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
 
@@ -51,6 +51,11 @@ public class EmailService {
             yes.addMails(temp);
             accountsRepo.save(yes);
         }
+    }
+
+    public List<Mail> getMails(String email, String folder) {
+        Account account = accountsRepo.findByEmail(email);
+        return account.getMails();
     }
 
     public void deleteMail(String id, String account) {
@@ -132,7 +137,7 @@ public class EmailService {
 //    }
 
     public boolean validateLogin(Account account) {
-        if (this.validate(account))
+        if (this.checkIfEmailExists(account))
         {
             if (accountsRepo.findByEmail(account.getEmail()).getPassword().equals(account.getPassword()))
             {

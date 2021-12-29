@@ -1,5 +1,5 @@
 package com.example.email;
-import org.junit.runner.RunWith;
+//import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -16,7 +16,7 @@ import java.util.List;
 import static org.mockito.BDDMockito.*;
 import static org.assertj.core.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 class EmailApplicationTests {
 
 	@MockBean

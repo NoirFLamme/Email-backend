@@ -3,9 +3,15 @@ package com.example.email;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class EmailController {
     @Autowired
@@ -20,46 +26,68 @@ public class EmailController {
         return accountCont.findAll();
     }
 
-    @PostMapping("/createAccount")
+    @PostMapping("/accounts/create")
     public boolean createAccount(@RequestBody Account account)
     {
-        if (accountCont.validate(account))
+        if (!accountCont.checkIfEmailExists(account))
         {
             accountCont.create(account);
             return  true;
         }
         return false;
-
     }
 
-    @PostMapping("/validate")
-    public boolean validate(@RequestBody Account account)
+    @PostMapping("/accounts/validate")
+    public boolean validateLogin(@RequestBody Account account)
     {
         return accountCont.validateLogin(account);
     }
 
 
-    @GetMapping("/view")
-    public Account view(@RequestBody Account account)
+    @GetMapping("/accounts/get")
+    public Account getAccount(@RequestParam String email)
     {
-        return accountCont.findAccount(account.getEmail());
+        return accountCont.findAccount(email);
+    }
+
+    @GetMapping("/mail/get")
+    public List<Mail> getMails(@RequestParam String email, @RequestParam String folder)
+    {
+        return accountCont.getMails(email, folder);
     }
 
 
+    private static String UPLOADED_FOLDER = "/Users/Zyad/Code/dbtest"; // Change this
+    @PostMapping("/file/upload")
+    @ResponseBody
 
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("Info") String Info) {
+        System.out.println("Json is" + Info);
+        if (file.isEmpty()) {
+            return "No file attached";
+        }
+        try {
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Succuss";
+    }
 
-    @PostMapping("/createMail")
+    @PostMapping("/mail/create")
     public void createMail(@RequestBody Mail mail){
         accountCont.add(mail);
     }
 
-    @DeleteMapping("/deleteMail")
+    @DeleteMapping("/mail/delete")
     public void deleteMail(@RequestParam String id, @RequestParam String account){
         accountCont.deleteMail(id, account);
     }
 
-
-    @PostMapping("/editMail")
+    @PostMapping("/mail/edit")
     public void editMail(@RequestParam String id, @RequestBody Mail mail){
         accountCont.editMail(id, mail);
     }
