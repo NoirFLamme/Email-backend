@@ -84,7 +84,7 @@ public class EmailController {
     }
 
     @DeleteMapping("/mail/delete")
-    public void deleteMail(@RequestParam String id, @RequestParam String account){
+    public void deleteMail(@RequestParam int id, @RequestParam String account){
         accountCont.deleteMail(id, account);
     }
 

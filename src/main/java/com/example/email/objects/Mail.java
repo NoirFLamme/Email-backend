@@ -8,8 +8,8 @@ import java.util.List;
 
 
 public class Mail implements Comparable<Mail>{
-    @Id
-    private final String id;
+
+    private  int id;
 
     private final Contact sender;
     private final List<Contact> receivers;
@@ -23,7 +23,7 @@ public class Mail implements Comparable<Mail>{
     private final Integer priority;
 
     public Mail(Contact sender,Date date, List<Contact> receivers, String subject,
-                String body, String id, String type, Integer priority, List<Attachment>  attachment) {
+                String body, int id, String type, Integer priority, List<Attachment>  attachment) {
         this.sender = sender;
         this.receivers = receivers;
         this.date = this.getDate();
@@ -37,8 +37,12 @@ public class Mail implements Comparable<Mail>{
         this.attachment = attachment;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Contact getSender() {

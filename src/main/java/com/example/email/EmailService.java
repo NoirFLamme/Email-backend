@@ -15,6 +15,8 @@ public class EmailService {
     @Autowired
     private AccountsRepo accountsRepo;
 
+    public static int count = 0;
+
 
     public List<Account> findAll(){
         return accountsRepo.findAll();
@@ -43,6 +45,8 @@ public class EmailService {
     public Account add(Mail mail) {
         Mail temp = mail;
         temp.setType("Sent");
+        temp.setId(count);
+        count++;
 
         Contact sender = mail.getSender();
         Account yes = accountsRepo.findByEmail(sender.getMailAddresses());
@@ -53,17 +57,18 @@ public class EmailService {
         for (Contact i : recievers) {
             yes = accountsRepo.findByEmail(i.getMailAddresses());
             temp.setType("Inbox");
-
+            temp.setId(count);
+            count++;
             yes.addMails(temp);
             accountsRepo.save(yes);
         }
         return yes;
     }
 
-    public void deleteMail(String id, String account) {
+    public void deleteMail(int id, String account) {
         Account temp = accountsRepo.findByEmail(account);
         for (Mail i: temp.getMails()) {
-            if (i.getId().equals(id))
+            if (i.getId() == id)
             {
                 int index = temp.getMails().indexOf(i);
                 i.setType("Trash");
@@ -101,7 +106,7 @@ public class EmailService {
         List<Mail> ye = new ArrayList<>();
         for (Mail i : temp.getMails())
         {
-            if (i.getId().equals(mail.getId()))
+            if (i.getId() == mail.getId())
             {
                 i = mail;
                 ye.add(mail);
